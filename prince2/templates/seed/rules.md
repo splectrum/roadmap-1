@@ -9,7 +9,8 @@
   and is never merged into `main` and never deleted.
 - `execute/default` is the execution branch, from `main`; the `execute`
   namespace leaves room for parallel execution.
-- Sequence: read the request from `pending/default`; execute on
+- Sequence: read the request from `pending/default`; sync
+  `execute/default` with `main` by merging `main` into it; execute on
   `execute/default`; add the additional data to the request on
   `pending/default`; merge `execute/default` into `main` with a plain
   merge; remove the finished request from `pending/default`.
