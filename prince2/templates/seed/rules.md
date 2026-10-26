@@ -5,7 +5,7 @@
 - `main` holds settled state.
 - `pending/default` is always there. Pending requests are stored in
   `pending/` on it, with their discussion notes and other transient data,
-  executed and committed there, and brought to `main` by pull request.
+  executed and committed there, and brought to `main` by a plain merge.
   Finished requests are removed from `pending/`.
 - The requester decides done from the execution data; the requester is not
   necessarily the executor.
