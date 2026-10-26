@@ -12,6 +12,9 @@
   by merging `main` into it before each execution. The `execute`
   namespace leaves room for parallel execution.
 - Request data goes to `pending/default`, the response to `execute/*`.
+  Request data includes the execution data of the request: metrics, audit,
+  verdicts. Data from a unit in operation belongs to its instance; nothing
+  private goes into `pending/default`.
 
 ## Commit messages
 
