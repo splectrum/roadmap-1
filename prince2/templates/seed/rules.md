@@ -14,8 +14,6 @@
   `execute/default`; add the additional data to the request on
   `pending/default`; merge `execute/default` into `main` with a plain
   merge; remove the finished request from `pending/default`.
-- The requester decides done from the execution data; the requester is not
-  necessarily the executor.
 
 ## Commit messages
 
@@ -29,9 +27,9 @@
 
 ## Git consequences
 
-- Merges into `main` are plain merges: no squash, no rebase, so referenced
-  commits stay reachable.
-- No force-push on `pending/default`; its history only grows.
+- Merges into `main` are plain merges: no squash, no rebase, so execution
+  history reaches `main` as it happened.
+- No force-push on any branch; history only grows.
 - A branch is deleted only after a plain merge: `git branch -d`, never
   `-D`.
 
@@ -50,3 +48,8 @@
 - Segments: lowercase `a-z`, `0-9`, `-`.
 - Reserved words only where defined.
 - A name is never both a branch and a prefix.
+
+## Open
+
+- Who decides a request is done (a process, for later).
+- Whether history may be rewritten to remove leaked data.
