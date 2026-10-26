@@ -22,7 +22,10 @@
 - First line: the state change.
 - Body: the request it answers and why, briefly.
 - References to the full details on `pending/default`, with the commit:
-  `<commit>:pending/<path>`.
+  `<commit>:pending/<path>`. The merge into `main` references the
+  `pending/default` commit holding the request details.
+- Fetching only `main` gives the repository without the request record;
+  fetching `pending/default` adds it.
 
 ## Git consequences
 
