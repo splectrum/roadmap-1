@@ -4,7 +4,7 @@ Status: **seed** — prepared in spl8, 2026-10-26
 
 This repository is a subject: the planning of SPLectrum engineering. It
 starts from this seed and grows by execution of its request
-(`request.md`); its history is the record of how it grew.
+(`pending/`); its history is the record of how it grew.
 
 Pre-P2P for now: plain GitHub repositories and Claude cloud sessions.
 
@@ -12,7 +12,8 @@ Pre-P2P for now: plain GitHub repositories and Claude cloud sessions.
 
 | Path | What lives there |
 |---|---|
-| `request.md` | The request that accompanies this seed |
+| `pending/` | Pending requests, until merged into main |
+| `prince2/` | PRINCE2 assets, such as templates |
 | `CLAUDE.md` | How to work in this repo |
 | `principles.md` | Operational principles, outside and inside a seed |
 | `roadmap.md` | The product, the capabilities, the first stage |

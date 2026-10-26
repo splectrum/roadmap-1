@@ -1,7 +1,7 @@
 # CLAUDE.md — SPLectrum roadmap
 
 This repository plans SPLectrum engineering. `principles.md` governs;
-`request.md` is the request this repository grows from.
+pending requests are under `pending/`.
 
 - **Autonomy first.** Collaboration only where required — meaning, missing or
   inaccessible information, any exception that halts the work — and
@@ -18,3 +18,10 @@ This repository plans SPLectrum engineering. `principles.md` governs;
 A state change becomes visible through a commit. When a discussion settles
 into a change, write it and commit, with the discussion that led to it
 distilled into the message.
+
+## Pending work
+
+On a `pending/<uri>` branch, `pending/` holds the requests and what their
+execution needs. Merging into `main` removes it; the merge commit message
+carries the request and the distilled discussion. Templates are PRINCE2
+assets, under `prince2/templates/`.

@@ -41,10 +41,16 @@ historicity. The inside principles hold within a single self-contained seed.
 1. **A state change becomes visible through a commit.** Data changed between
    commits is dirty: a transaction in progress, not yet visible state. The
    commit history is the seed's historicity.
-2. **A test is a way of processing execution data.** Execution data can be
+2. **Pending work lives under `pending`.** A branch named `pending/<uri>`
+   carries a folder `pending/` holding the request and whatever its
+   execution needs; requests and their structure sit below it, nothing more
+   is specified. The work is answered by merging into `main`, which holds
+   settled state: `pending/` is removed in that merge, and its request and
+   distilled discussion go into the merge commit message.
+3. **A test is a way of processing execution data.** Execution data can be
    read for a verdict, a narrative or a diagnosis; a test is the reading that
    gives a verdict.
-3. **Private instance data is its own subject, in its own repository.** A
+4. **Private instance data is its own subject, in its own repository.** A
    unit's repository describes the private data it needs — config schema,
    meaning, examples — and holds none. A running instance is a different
    being, owned by its operator: its config, instance data and secrets live
