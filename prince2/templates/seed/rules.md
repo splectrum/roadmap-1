@@ -2,18 +2,16 @@
 
 ## Branches and pending work
 
-- `main` holds settled state.
-- `pending/default` is always there: the record of requests. Pending
-  requests are stored in `pending/` on it, with their discussion notes and
-  other data. It is an orphan branch, sharing no history with `main`,
-  and is never merged into `main` and never deleted.
-- `execute/default` is the execution branch, from `main`; the `execute`
+- `main` holds settled state. It changes only by plain merges from
+  `execute/*`, never by direct commits.
+- `pending/default` is always there: an orphan branch, sharing no history
+  with `main`, never merged and never deleted. Its tree holds the pending
+  requests in `pending/`, with their discussion notes and other data; its
+  history is the record of all requests.
+- `execute/default` is the execution branch, from `main`, synced with `main`
+  by merging `main` into it before each execution. The `execute`
   namespace leaves room for parallel execution.
-- Sequence: read the request from `pending/default`; sync
-  `execute/default` with `main` by merging `main` into it; execute on
-  `execute/default`; add the additional data to the request on
-  `pending/default`; merge `execute/default` into `main` with a plain
-  merge; remove the finished request from `pending/default`.
+- Request data goes to `pending/default`, the response to `execute/*`.
 
 ## Commit messages
 
@@ -22,8 +20,6 @@
 - References to the full details on `pending/default`, with the commit:
   `<commit>:pending/<path>`. The merge into `main` references the
   `pending/default` commit holding the request details.
-- Fetching only `main` gives the repository without the request record;
-  fetching `pending/default` adds it.
 
 ## Git consequences
 
@@ -35,14 +31,18 @@
 
 ## Reserved words
 
-| Word | Meaning |
-|---|---|
-| `main` | Settled state |
-| `pending` | Namespace for pending work: branch prefix and folder |
-| `execute` | Namespace for execution branches |
-| `default` | The permanent branch under a namespace |
+Current scope; revised as needed.
+
+| Word | Meaning | Reserved as |
+|---|---|---|
+| `main` | Settled state | Branch name |
+| `pending` | Namespace for pending work | First segment of a branch name; top folder on `pending/default` |
+| `execute` | Namespace for execution branches | First segment of a branch name |
+| `default` | The permanent branch under a namespace | Last segment of a branch name under a namespace |
 
 ## URIs
+
+Scope: branch names and repository folders, wherever XPath is used.
 
 - Relative: `/`-separated segments; no scheme, query or fragment.
 - Segments: lowercase `a-z`, `0-9`, `-`.
@@ -51,5 +51,4 @@
 
 ## Open
 
-- Who decides a request is done (a process, for later).
 - Whether history may be rewritten to remove leaked data.
