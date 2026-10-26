@@ -10,3 +10,7 @@ How to work in this repository.
 - **Settled state** is `main`. Merging answers the pending work: remove
   `pending/` in the merge and carry its request and distilled discussion in
   the merge commit message.
+
+In Claude Code cloud sessions, execution runs on the session's `claude/…`
+branch. The management setup is unchanged; the session branch is just
+where the execution happens.
