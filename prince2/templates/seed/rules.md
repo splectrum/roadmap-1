@@ -4,9 +4,10 @@
 
 - `main` holds settled state.
 - `pending/default` is always there. Pending requests are stored in
-  `pending/` on it, with their discussion notes and other transient data,
-  executed and committed there, and brought to `main` by a plain merge.
-  Finished requests are removed from `pending/`.
+  `pending/` on it, with their discussion notes and other transient data.
+- Sequence: execute the request and commit to the branch; delete the
+  request details in another commit; merge into `main` with a plain merge.
+  The details stay in history, out of `main`'s tree.
 - The requester decides done from the execution data; the requester is not
   necessarily the executor.
 
@@ -22,6 +23,8 @@
 - Merges into `main` are plain merges: no squash, no rebase, so referenced
   commits stay reachable.
 - No force-push on `pending/default`; its history only grows.
+- A branch is deleted only after a plain merge: `git branch -d`, never
+  `-D`.
 
 ## Reserved words
 
