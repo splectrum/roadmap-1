@@ -32,7 +32,17 @@ the test loop.
 
 ## Next
 
-**First stage: research the capabilities.** For each of the six, establish
+**Scoping stage**, worked in this repository. A unit of work is a request,
+done, and committed: the commit is the response, its message carries the
+request and the discussion that settled it. Two products:
+
+- **Seed template:** the initial repository for a self-contained seed and
+  the execution of its request, distilled from this repository as its
+  first instance.
+- **Capability list and sequence:** the capabilities to explore, each with
+  the question it answers, and the order they are taken in.
+
+**Then: research the capabilities.** For each of the six, establish
 what exists, what we build, and the risks — by research and by probes.
 
 **Connectivity is tested as part of it.** The options, each a probe with a
