@@ -3,11 +3,15 @@
 ## Branches and pending work
 
 - `main` holds settled state.
-- `pending/default` is always there. Pending requests are stored in
-  `pending/` on it, with their discussion notes and other transient data.
-- Sequence: execute the request and commit to the branch; delete the
-  request details in another commit; merge into `main` with a plain merge.
-  The details stay in history, out of `main`'s tree.
+- `pending/default` is always there: the record of requests. Pending
+  requests are stored in `pending/` on it, with their discussion notes and
+  other data. It is never merged into `main` and never deleted.
+- `execute/default` is the execution branch, from `main`; the `execute`
+  namespace leaves room for parallel execution.
+- Sequence: read the request from `pending/default`; execute on
+  `execute/default`; add the additional data to the request on
+  `pending/default`; merge `execute/default` into `main` with a plain
+  merge; remove the finished request from `pending/default`.
 - The requester decides done from the execution data; the requester is not
   necessarily the executor.
 
@@ -15,8 +19,8 @@
 
 - First line: the state change.
 - Body: the request it answers and why, briefly.
-- References to the full details under `pending/`; where the path may have
-  gone, with the commit: `<commit>:<path>`.
+- References to the full details on `pending/default`, with the commit:
+  `<commit>:pending/<path>`.
 
 ## Git consequences
 
@@ -32,6 +36,7 @@
 |---|---|
 | `main` | Settled state |
 | `pending` | Namespace for pending work: branch prefix and folder |
+| `execute` | Namespace for execution branches |
 | `default` | The permanent branch under a namespace |
 
 ## URIs
@@ -40,7 +45,3 @@
 - Segments: lowercase `a-z`, `0-9`, `-`.
 - Reserved words only where defined.
 - A name is never both a branch and a prefix.
-
-## Open
-
-- Whether `pending/` appears on `main`.
