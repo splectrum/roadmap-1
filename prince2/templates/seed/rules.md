@@ -5,7 +5,8 @@
 - `main` holds settled state.
 - `pending/default` is always there: the record of requests. Pending
   requests are stored in `pending/` on it, with their discussion notes and
-  other data. It is never merged into `main` and never deleted.
+  other data. It is an orphan branch, sharing no history with `main`,
+  and is never merged into `main` and never deleted.
 - `execute/default` is the execution branch, from `main`; the `execute`
   namespace leaves room for parallel execution.
 - Sequence: read the request from `pending/default`; execute on
