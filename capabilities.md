@@ -43,6 +43,9 @@ behaviour; everything above uses it, never git directly.
 
 | URI | Question it answers |
 |---|---|
+| `layer/create` | Create a layer branch, orphan, under a reserved first segment |
+| `layer/deploy` | Deploy a folder package into a layer, as a commit referencing its source |
+| `layer/extract` | Extract a layer into a folder package, recording its provenance |
 | `layer/compose` | Build a composed view: `main` with its layers, local, imported or virtual |
 | `layer/import` | Pull a layer in from another repository, with its history |
 | `layer/export` | Push a layer out to another repository |
