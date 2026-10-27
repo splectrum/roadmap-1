@@ -51,7 +51,11 @@ request and the discussion that settled it. Two products:
   the execution of its request, distilled from this repository as its
   first instance.
 - **Capability list and sequence:** the capabilities to explore, each with
-  the question it answers, and the order they are taken in.
+  the question it answers, and the order they are taken in
+  (`capabilities.md`). Any activity that can be scripted is a capability.
+- **Capability categories:** capabilities categorised by URI.
+- **Storing functionality:** how functionality is kept in the repository
+  — branches, folders, repositories; a Mycelium discussion.
 
 **Then: research the capabilities.** For each of the six, establish
 what exists, what we build, and the risks — by research and by probes.
