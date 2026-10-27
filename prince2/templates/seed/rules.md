@@ -3,35 +3,35 @@
 ## Branches and pending work
 
 - `main` holds settled state. It changes only by plain merges from
-  `_execute/*`, never by direct commits.
-- `_pending/default` is always there: an orphan branch, sharing no history
+  `execute/*`, never by direct commits.
+- `pending/default` is always there: an orphan branch, sharing no history
   with `main`, never merged and never deleted. Its tree holds the pending
-  requests in `_pending/`, with their discussion notes and other data; its
+  requests in `pending/`, with their discussion notes and other data; its
   history is the record of all requests.
-- `_execute/default` is the execution branch, from `main`, synced with `main`
-  by merging `main` into it before each execution. The `_execute`
+- `execute/default` is the execution branch, from `main`, synced with `main`
+  by merging `main` into it before each execution. The `execute`
   namespace leaves room for parallel execution.
-- `_overlay/<name>` branches are overlays on `main`: orphan branches
-  mirroring `main`'s paths, holding underscore folders (the Mycelium
-  model) that sit with the data they belong to in a composed view.
-  Underscore folders live only in these branches, never on `main`.
-- Request data goes to `_pending/default`, the response to `_execute/*`.
+- `overlay/<name>` branches are overlays on `main`: orphan branches
+  mirroring `main`'s paths.
+- Further data layers, if needed, are `data/<name>` branches.
+- Request data goes to `pending/default`, the response to `execute/*`.
   Request data includes the execution data of the request: metrics, audit,
   verdicts. Data from a unit in operation belongs to its instance; nothing
-  private goes into `_pending/default`.
+  private goes into `pending/default`.
 
 ## Layers
 
 - A repository is a composition of disjoint layers. `main`, whose history
-  `_execute` creates, is one; every other underscore branch is its own.
+  `execute` creates, is one; every other layer branch is its own.
 - Layers are never merged into each other, only referenced, and can be
   pulled into other repositories with their history.
 - *Layer* is the general term (data layers will come). An *overlay* is a
-  layer composed over `main` by path.
+  layer that shares `main`'s paths. Composing branches into one view is
+  left open, to be decided later.
 - Proposals, to be tested:
-  - Capabilities are global for now: `_capability` holds the catalogue
+  - Capabilities are global for now: `capability/default` holds the catalogue
     of installed capabilities, by capability URI.
-  - Local scope is config, in its own overlay: `_overlay/config`, by
+  - Local scope is config, in its own overlay: `overlay/config`, by
     `main`'s paths, referring to capabilities by URI.
   - A layer is *local* (a branch here), *imported* (fetched here with its
     history), or *virtual* (resolved from another repository at compose
@@ -42,9 +42,9 @@
 
 - First line: the state change.
 - Body: the request it answers and why, briefly.
-- References to the full details on `_pending/default`, with the commit:
-  `<commit>:_pending/<path>`. The merge into `main` references the
-  `_pending/default` commit holding the request details.
+- References to the full details on `pending/default`, with the commit:
+  `<commit>:pending/<path>`. The merge into `main` references the
+  `pending/default` commit holding the request details.
 
 ## Git consequences
 
@@ -54,29 +54,32 @@
 - A branch is deleted only after a plain merge: `git branch -d`, never
   `-D`.
 
-## Underscore namespace
+## Reserved first segments
 
-The underscore is reserved for the repository's internal namespace. Free
-names never start with `_`, so internal names never clash with them.
-`main` is the one plain name with a fixed meaning: the data.
+A layer branch is named by a reserved first segment; all other branch
+names, and all folder names, are free. Current scope; revised as needed.
 
-Current namespaces; revised as needed.
-
-| Namespace | Meaning |
+| Segment | Meaning |
 |---|---|
-| `_pending` | Pending work: branch prefix, and top folder on `_pending/default` |
-| `_execute` | Execution branches |
-| `_overlay` | Overlay branches on `main` |
-| `_capability` | The capability catalogue (proposal) |
+| `main` | The data (the default branch) |
+| `pending` | Pending work; also the top folder on `pending/default` |
+| `execute` | Execution branches |
+| `overlay` | Overlays on `main` |
+| `data` | Further data layers |
+| `capability` | The capability catalogue (proposal) |
 | `default` | The permanent branch within a namespace |
 
 ## URIs
 
 Scope: branch names and repository folders, wherever XPath is used.
 
-- Relative: `/`-separated segments; no scheme, query or fragment.
-- Segments: lowercase `a-z`, `0-9`, `-`; a leading `_` marks the internal
-  namespace.
+- Every URI starts with a branch name, from the root: `/main/x/y`,
+  `/overlay/config/x/y`. The branch part is unambiguous, because a branch
+  is always a leaf.
+- Relative within a repository: `/`-separated segments; no scheme, query
+  or fragment.
+- Segments, for branches and folders alike: lowercase `a-z`, `0-9`, `-`.
+  Any folder can then become a branch, and the other way round.
 - A name is never both a branch and a prefix.
 
 ## Open
