@@ -15,6 +15,7 @@ Pre-P2P for now: plain GitHub repositories and Claude cloud sessions.
 | `pending/` | Pending requests of this repository |
 | `capabilities.md` | The capabilities needed, by URI, and their sequence |
 | `capabilities/` | Code kept before implementation; reuse candidates |
+| `seeds/` | Seeds prepared here, to be planted in new repositories |
 | `prince2/` | PRINCE2 assets: templates, including the seed template and its rules |
 | `CLAUDE.md` | How to work in this repo |
 | `principles.md` | Operational principles, outside and inside a seed |
