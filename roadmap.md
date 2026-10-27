@@ -57,6 +57,28 @@ request and the discussion that settled it. Four products:
 - **Storing functionality:** how functionality is kept in the repository
   — branches, folders, repositories; a Mycelium discussion.
 
+**First development phase** (proposal): the self-contained repository's
+rules on git, with XPath access — one repository, using itself.
+
+- **All git implementations:** one backend contract (objects, refs,
+  commit, merge, fetch, push), an adapter per implementation (native git,
+  isomorphic-git on Node and on Bare), one test suite run against each.
+- **Capabilities:** `state/git`, `state/xpath`; `layer/create`,
+  `layer/deploy`, `layer/extract`, `layer/request`, `layer/import`,
+  `layer/export` (`layer/compose` stays open); `repo/seed`,
+  `repo/integrity`, `repo/host`, `repo/sync`.
+- **The capability layer is self-contained:** its categorisation and
+  implementation details are local to it, not inherited by future
+  capability layers; its content is complete and internally consistent,
+  so reading it is enough to use it.
+- **Development is data, operation is deployed:** the capability code is
+  developed on `main`, deployed into `capability/default` to operate, and
+  into a parallel `capability/<name>` (e.g. `capability/test`) to test run
+  without touching the operational layer. Promotion deploys the tested
+  tree; the first deployment is a bootstrap by hand.
+- **Done:** the repository runs its own operations on its deployed
+  `capability/default`, after a test run on `capability/test`.
+
 **Then: research the capabilities.** For each of the six, establish
 what exists, what we build, and the risks — by research and by probes.
 
