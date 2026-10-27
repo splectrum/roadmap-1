@@ -25,6 +25,7 @@ settled; neither is where functionality is stored.
 | `repo/seed` | Create a repository from the seed template |
 | `repo/host` | Manage the repository on its host (GitHub): default branch, protection of `main` and `_*` |
 | `repo/integrity` | Check the repository keeps its rules: disjoint layers, plain merges, history only grows |
+| `repo/sync` | Sync all layers to other remotes (e.g. Codeberg): plain pushes, report divergence |
 
 ## State
 
@@ -40,7 +41,7 @@ behaviour; everything above uses it, never git directly.
 
 | URI | Question it answers |
 |---|---|
-| `layer/compose` | Build a composed view: `main` with its overlays |
+| `layer/compose` | Build a composed view: `main` with its layers, local, imported or virtual |
 | `layer/import` | Pull a layer in from another repository, with its history |
 | `layer/export` | Push a layer out to another repository |
 | `layer/request` | The request flow: `_pending/default`, `_execute`, merge into `main` with references |

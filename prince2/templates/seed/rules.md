@@ -27,7 +27,16 @@
 - Layers are never merged into each other, only referenced, and can be
   pulled into other repositories with their history.
 - *Layer* is the general term (data layers will come). An *overlay* is a
-  layer for capability or metadata, composed over `main` by path.
+  layer composed over `main` by path.
+- Proposals, to be tested:
+  - Capabilities are global for now: `_capability` holds the catalogue
+    of installed capabilities, by capability URI.
+  - Local scope is config, in its own overlay: `_overlay/config`, by
+    `main`'s paths, referring to capabilities by URI.
+  - A layer is *local* (a branch here), *imported* (fetched here with its
+    history), or *virtual* (resolved from another repository at compose
+    time, never stored here). Private config is a virtual layer from the
+    private instance repository.
 
 ## Commit messages
 
@@ -58,6 +67,7 @@ Current namespaces; revised as needed.
 | `_pending` | Pending work: branch prefix, and top folder on `_pending/default` |
 | `_execute` | Execution branches |
 | `_overlay` | Overlay branches on `main` |
+| `_capability` | The capability catalogue (proposal) |
 | `default` | The permanent branch within a namespace |
 
 ## URIs
