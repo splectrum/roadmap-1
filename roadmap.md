@@ -45,7 +45,7 @@ possible, and come first:
 
 **Scoping stage**, worked in this repository. A unit of work is a request,
 done, and committed: the commit is the response, its message carries the
-request and the discussion that settled it. Two products:
+request and the discussion that settled it. Four products:
 
 - **Seed template:** the initial repository for a self-contained seed and
   the execution of its request, distilled from this repository as its
