@@ -4,7 +4,9 @@ Status: **preliminary** (2026-10-27)
 
 The capabilities needed, by URI. Any activity that can be scripted is a
 capability and goes on this list. Categories (first segment) are not yet
-settled; neither is where functionality is stored.
+settled; neither is where functionality is stored. Code kept before
+implementation sits in `capabilities/<uri>/`; reuse candidates are in
+`capabilities/reuse.md`.
 
 ## Prerequisites — first
 
@@ -83,6 +85,7 @@ behaviour; everything above uses it, never git directly.
 | `data/keystore` | Where a device's primary key is kept |
 | `data/blind` | An always-on blind peer for availability |
 | `data/pq` | Post-quantum readiness of key exchange |
+| `data/session` | How a cloud session gets the private data it needs, and whether an AI session can act as operator |
 
 ## Sequence
 
