@@ -27,8 +27,19 @@ required capabilities, not as the goal itself. Keep it simple.
    the owner's paired devices, encrypted, with an always-on blind peer for
    availability. Every application needs it.
 
-**Prerequisites:** a Docker stack to run several nodes, and a real phone in
-the test loop.
+**Prerequisites** are capabilities like any other, implemented in Bare where
+possible, and come first:
+
+- **Environment sensing:** a node knows what it runs on — runtime, host,
+  container, cloud session, Docker — from what the runtime reports, what it
+  finds itself, and its instance config, which wins. A first Bare probe
+  ran in a Claude Code cloud session (2026-10-27): Bare 1.36.0 on linux/x64,
+  the session seen through its environment, Docker usable once `dockerd` is
+  started. Outbound UDP not yet tested.
+- **Deploy / run / teardown:** a script that launches several nodes and
+  adapts to where it runs — Docker in a cloud session or on a PC, Bare
+  directly on a phone.
+- **A real phone in the test loop.**
 
 ## Next
 
