@@ -18,14 +18,13 @@ settled; neither is where functionality is stored.
 | `node/teardown` | Remove what was deployed, leaving nothing behind |
 | `phone/loop` | Get a real phone into the test loop and read its execution data |
 
-## Working practice
+## Repository
 
 | URI | Question it answers |
 |---|---|
 | `repo/seed` | Create a repository from the seed template |
-| `request/pending` | Add a request to `_pending/default` |
-| `request/execute` | Execute a request on `_execute/default`, synced from `main` |
-| `request/merge` | Merge into `main` with a reference to the request details |
+| `repo/host` | Manage the repository on its host (GitHub): default branch, protection of `main` and `_*` |
+| `repo/integrity` | Check the repository keeps its rules: disjoint layers, plain merges, history only grows |
 
 ## State
 
@@ -33,6 +32,18 @@ settled; neither is where functionality is stored.
 |---|---|
 | `state/git` | Keep all node state in git; isomorphic-git or custom? |
 | `state/xpath` | Query the git trees with XPath |
+
+## Layers
+
+A layer on top of git (native or isomorphic) that gives the required
+behaviour; everything above uses it, never git directly.
+
+| URI | Question it answers |
+|---|---|
+| `layer/compose` | Build a composed view: `main` with its overlays |
+| `layer/import` | Pull a layer in from another repository, with its history |
+| `layer/export` | Push a layer out to another repository |
+| `layer/request` | The request flow: `_pending/default`, `_execute`, merge into `main` with references |
 
 ## Units
 
@@ -74,7 +85,8 @@ settled; neither is where functionality is stored.
 
 ## Sequence
 
-Prerequisites, then state, units and UI on a single node, then nodes on
+Prerequisites, then state (git, then layers, then XPath), units and UI
+on a single node, then nodes on
 devices, then P2P, then private data. Research-only probes — connectivity,
-post-quantum — run alongside. Working practice is used throughout and
-tested in roadmap-2.
+post-quantum — run alongside. Repository and layer capabilities carry the
+working practice, tested in roadmap-2.

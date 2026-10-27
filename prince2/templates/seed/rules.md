@@ -20,6 +20,15 @@
   verdicts. Data from a unit in operation belongs to its instance; nothing
   private goes into `_pending/default`.
 
+## Layers
+
+- A repository is a composition of disjoint layers. `main`, whose history
+  `_execute` creates, is one; every other underscore branch is its own.
+- Layers are never merged into each other, only referenced, and can be
+  pulled into other repositories with their history.
+- *Layer* is the general term (data layers will come). An *overlay* is a
+  layer for capability or metadata, composed over `main` by path.
+
 ## Commit messages
 
 - First line: the state change.
