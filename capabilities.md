@@ -23,8 +23,8 @@ settled; neither is where functionality is stored.
 | URI | Question it answers |
 |---|---|
 | `repo/seed` | Create a repository from the seed template |
-| `request/pending` | Add a request to `pending/default` |
-| `request/execute` | Execute a request on `execute/default`, synced from `main` |
+| `request/pending` | Add a request to `_pending/default` |
+| `request/execute` | Execute a request on `_execute/default`, synced from `main` |
 | `request/merge` | Merge into `main` with a reference to the request details |
 
 ## State
