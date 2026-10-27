@@ -8,9 +8,16 @@
   with `main`, never merged and never deleted. Its tree holds the pending
   requests in `pending/`, with their discussion notes and other data; its
   history is the record of all requests.
-- `execute/default` is the execution branch, from `main`, synced with `main`
-  by merging `main` into it before each execution. The `execute`
-  namespace leaves room for parallel execution.
+- `execute/main` is the execution branch for `main`, from `main`, synced
+  with `main` by merging `main` into it before each execution. Execution
+  branches are named after their target, `execute/<target>`, which leaves
+  room for parallel execution (proposal).
+- `publish/<package>` branches (proposal) hold a folder package's history,
+  split from `main` with `git subtree split --prefix=<package>`. They are
+  derived from `main`, not disjoint: the one exception to disjoint layers.
+  A package is published by a plain push of its branch to the product
+  repository's `execute/main`, merged into `main` there. No `--rejoin`;
+  changes coming back go through `execute/main` like any other.
 - `overlay/<name>` branches are overlays on `main`: orphan branches
   mirroring `main`'s paths.
 - Further data layers, if needed, are `data/<name>` branches.
@@ -63,11 +70,12 @@ names, and all folder names, are free. Current scope; revised as needed.
 |---|---|
 | `main` | The data (the default branch) |
 | `pending` | Pending work; also the top folder on `pending/default` |
-| `execute` | Execution branches |
+| `execute` | Execution branches, named after their target |
+| `publish` | Packages split from `main` for publishing (proposal) |
 | `overlay` | Overlays on `main` |
 | `data` | Further data layers |
 | `capability` | The capability catalogue (proposal) |
-| `default` | The permanent branch within a namespace |
+| `default` | The permanent branch within a namespace (in `execute`, the target names it) |
 
 ## URIs
 

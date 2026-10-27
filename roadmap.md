@@ -63,10 +63,10 @@ rules on git, with XPath access — one repository, using itself.
 - **All git implementations:** one backend contract (objects, refs,
   commit, merge, fetch, push), an adapter per implementation (native git,
   isomorphic-git on Node and on Bare), one test suite run against each.
-- **Capabilities:** `state/git`, `state/xpath`; `layer/create`,
+- **Capabilities:** `state/uri`, `state/xpath`, `state/git`; `layer/create`,
   `layer/deploy`, `layer/extract`, `layer/request`, `layer/import`,
   `layer/export` (`layer/compose` stays open); `repo/seed`,
-  `repo/integrity`, `repo/host`, `repo/sync`.
+  `repo/integrity`, `repo/host`, `repo/sync`, `repo/publish`.
 - **The capability layer is self-contained:** its categorisation and
   implementation details are local to it, not inherited by future
   capability layers; its content is complete and internally consistent,
@@ -76,6 +76,17 @@ rules on git, with XPath access — one repository, using itself.
   into a parallel `capability/<name>` (e.g. `capability/test`) to test run
   without touching the operational layer. Promotion deploys the tested
   tree; the first deployment is a bootstrap by hand.
+- **Packages:** `mycelium-uri` (our URIs, generic) and `mycelium-xpath`
+  (tree navigation, generic) as helpers; `mycelium-git` on them — all the
+  repository rules (branches, layers, flows, safe operations, URI access
+  from the branch root) over a backend contract. Engines: native git as
+  reference (from `bare-for-pear/git`), `p2p-git` on bare-fs or Hyperdrive
+  as the embedded engine, to be finished (merge and index flow untested).
+- **One development repository per phase**, packages as folders on its
+  `main`. Each package is published by subtree split into
+  `publish/<package>` and a plain push to its product repository's
+  `execute/main`; the human syncs from local for now. Product repositories
+  are created by the human.
 - **Done:** the repository runs its own operations on its deployed
   `capability/default`, after a test run on `capability/test`.
 
