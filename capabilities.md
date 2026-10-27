@@ -28,13 +28,15 @@ implementation sits in `capabilities/<uri>/`; reuse candidates are in
 | `repo/host` | Manage the repository on its host (GitHub): default branch, protection of `main` and the layer branches |
 | `repo/integrity` | Check the repository keeps its rules: disjoint layers, plain merges, history only grows |
 | `repo/sync` | Sync all layers to other remotes (e.g. Codeberg): plain pushes, report divergence |
+| `repo/publish` | Split a folder package into `publish/<package>` and push it to its product repository's `execute/main` |
 
 ## State
 
 | URI | Question it answers |
 |---|---|
 | `state/git` | Keep all node state in git; isomorphic-git or custom? |
-| `state/xpath` | Query the git trees with XPath |
+| `state/uri` | Our URIs: parse, validate, split at known prefixes (`mycelium-uri`) |
+| `state/xpath` | Navigate a tree by path, generic (`mycelium-xpath`) |
 
 ## Layers
 
@@ -49,7 +51,7 @@ behaviour; everything above uses it, never git directly.
 | `layer/compose` | Build a composed view: `main` with its layers, local, imported or virtual |
 | `layer/import` | Pull a layer in from another repository, with its history |
 | `layer/export` | Push a layer out to another repository |
-| `layer/request` | The request flow: `pending/default`, `execute`, merge into `main` with references |
+| `layer/request` | The request flow: `pending/default`, `execute/main`, merge into `main` with references |
 
 ## Units
 
