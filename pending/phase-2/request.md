@@ -47,15 +47,31 @@ Capabilities, as in `capabilities.md`: `state/hyperdrive`; `env/docker`,
 ## Modules
 
 - All modules come in as folders on `main`: the base modules
-  `mycelium-uri`, `mycelium-xpath` and `mycelium-git` for the moment
-  (development goes on here, their product repositories are updated by
-  hand), `mycelium-layer` and `mycelium-repo` with no repositories of
+  `mycelium-uri`, `mycelium-xpath` and `mycelium-git` (development goes
+  on here), `mycelium-layer` and `mycelium-repo` with no repositories of
   their own.
 - The test-run machinery comes along; its practice stays: expectations in
   the requests, reports as requests, kept runs as data on `main`, machinery
   pinned by id and validated before the pin moves.
-- Publishing to product repositories is ad hoc, done by hand, not
-  prescribed.
+- **Keep the product repositories updated from here.** A session can
+  attach other repositories and push to them, so a module's product
+  repository follows its folder: once a change is validated (a test run,
+  a new id), the session splits the folder's history (`git subtree split`)
+  and merges it into the product repository's `main` with a plain merge,
+  never a force-push. The commit message names the dev repository's
+  commit; the dev repository records the product commit. Product
+  repositories:
+
+  | Folder | Product repository |
+  |---|---|
+  | `mycelium-uri` | `pear-full-square/mycelium-uri` |
+  | `mycelium-xpath` | `pear-full-square/mycelium-xpath` |
+  | `mycelium-git` | `pear-full-square/mycelium-git` |
+  | (a dependency) | `bare-for-pear/p2p-git`: fixes made in it directly |
+
+  `pear-full-square` holds our application modules, `bare-for-pear` Bare
+  versions of third-party or general-purpose modules. A new module's
+  repository is created by the human.
 
 ## Practice
 

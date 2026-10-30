@@ -12,8 +12,11 @@
   with `main` by merging `main` into it before each execution. Execution
   branches are named after their target, `execute/<target>`, which leaves
   room for parallel execution (proposal).
-- Publishing a package to its product repository is ad hoc for now,
-  done by hand, and not prescribed.
+- A package with a product repository is kept updated from here: once
+  validated, its folder's history is split (`git subtree split`) and
+  plain-merged into the product repository's `main`, never force-pushed.
+  The commit messages link the two commits. Product repositories are
+  created by the human.
 - `overlay/<name>` branches are overlays on `main`: orphan branches
   mirroring `main`'s paths.
 - Further data layers, if needed, are `data/<name>` branches.
