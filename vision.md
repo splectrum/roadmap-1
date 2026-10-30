@@ -40,6 +40,8 @@ lazily what it reads.
 - A deployment links to packages (gitlinks or a manifest; on Hypercore a
   key and a commit) rather than containing them.
 - A package repository holds the bytes; everything else holds links.
+  Towards a single code repository: run repositories stay self-contained
+  by holding links the cluster resolves, so kept runs get small.
 - A seed node starts from a plain base with the runtime (Bare) only; a
   self-contained bootstrap repository sets it up. It is the first
   always-on peer; later nodes need only the bootstrap repository and its
