@@ -65,7 +65,18 @@ the first settled rules. What was left out was overtaken by a changed
 landscape, not left unfinished; that landscape is being worked into this
 roadmap.
 
-**Then: research the capabilities.** For each of the six, establish
+**Second development phase** (next; the seed defines its requirements
+and done): **the creation of a P2P cluster**, starting with p2p-git on
+Hyperdrive. Its own development repository, with `mycelium-layer` and
+`mycelium-repo` as folders in it (no repositories of their own), on the
+base modules `mycelium-uri`, `mycelium-xpath`, `mycelium-git`. Publishing
+to product repositories stays ad hoc, done by hand. Directions to take
+into account are in `vision.md`.
+
+What follows depends on its outcome. The research below stays as input,
+not as a sequence.
+
+**Research the capabilities.** For each of the six, establish
 what exists, what we build, and the risks — by research and by probes.
 
 **Connectivity is tested as part of it.** The options, each a probe with a
@@ -108,8 +119,8 @@ automation assembled from them, as the check that none is missing.
 
 ## Later
 
-- Mycelium: the layers above the git repository.
-- Persistence behind git: filesystem, then Hyperdrive.
+- The mycelium base layer: Hypercore, mycelium-git, AVRO (typed data),
+  Kafka (streaming, high-volume data); `vision.md`.
 - Translation between natural language and a unit's internals.
 - The working practice moves onto node components.
 

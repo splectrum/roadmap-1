@@ -1,6 +1,7 @@
 # Principles
 
-Status: **settled in discussion** (2026-10-26)
+Status: **settled in discussion** (2026-10-26; amended after phase 1,
+2026-10-30)
 
 Two levels. The outside principles hold between beings, human and AI: a
 being is seen from outside as a functional process with execution
@@ -52,10 +53,39 @@ historicity. The inside principles hold within a single self-contained seed.
    Visible means visible to the owning subject, not public. Secrets are
    encrypted within that repository, never kept as hidden state outside it.
 
+4. **A request is the only means to trigger change in a repository.** A
+   repository is a process: seeded, executing its requests, kept, and
+   asked again. Nobody writes into another repository. Reading and use go
+   through APIs, an external one and most probably internal ones, built
+   later.
+5. **Outcomes are data, in the visible state on `main`.** Results, notes,
+   designs, decisions, kept runs. `pending/default` holds the requests and
+   the metadata around producing the visible state, nothing more.
+6. **Execution is repeatable exactly.** A unit records its invocation,
+   every state it ran on by commit, its environment and its
+   nondeterministic inputs: enough to rerun it. So metrics and audit are
+   needed only at the boundary; further detail comes from rerunning.
+   Execution records; a separate reading judges.
+7. **Validation and mapping happen at the boundary.** What comes in is
+   validated into its canonical form and mapped onto what is stored (URIs:
+   case-insensitive outside, exact inside). Inside, nothing is checked
+   again.
+8. **Cascading links.** A process occurs within a context. The link from
+   the context down to the process is authoritative; the link from the
+   process back up is informative. A repository holding a run, or a
+   roadmap linking a phase repository by commit, is the authority.
+9. **Ids, not versions.** A validated instance of a module gets an id;
+   the commit that records it is its place in the module's evolution. The
+   history is the authoritative record.
+
+Outcome of phase 1: `splectrum/dev-env-1-mycelium-git@33634de:notes/api.md`, `rules.md`.
+
 Below the principles, a seed's internals have two further layers, both
 choices rather than principles:
 
-- **Stack:** git with XPath over the trees for now. Mycelium and its layers
-  above git come later.
-- **Prerequisites:** the framework seeds run on — P2P nodes, Docker, and for
-  now Claude cloud sessions.
+- **Stack:** git with XPath over the trees, through the mycelium modules
+  (`mycelium-uri`, `mycelium-xpath`, `mycelium-git` over native git,
+  isomorphic-git and p2p-git). Towards the mycelium base layer:
+  Hypercore, mycelium-git, AVRO, Kafka (`vision.md`).
+- **Prerequisites:** the framework seeds run on — P2P nodes, Docker, Bare,
+  and for now Claude cloud sessions.
