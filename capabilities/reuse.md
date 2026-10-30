@@ -19,3 +19,12 @@ and filters on the dropped underscore.
 
 Design background: `splectrum/spl7@5389fc1` `plan/`; `splectrum/spl6`
 `plan/mycelium-design.md`.
+
+Phase 1 (2026-10-30, `splectrum/dev-env-1-mycelium-git@33634de`): the mycelium `lib/` and
+`bare-for-pear/isomorphic-git` are superseded by `mycelium-git`.
+`p2p-git` is the embedded engine and passes the backend contract, on
+bare-fs and Hyperdrive, Node and Bare. Still to fix in p2p-git itself
+(`mycelium-git`'s `hyperdriveFs` works around the first two):
+`hyperdrive-fs.js` reports folders as not-folders (`Stats(null)`), and
+lacks `readlink` and `symlink`; its pack parser decodes delta offsets
+wrongly (`notes/probes/`).

@@ -1,6 +1,7 @@
 # Capabilities
 
-Status: **preliminary** (2026-10-27)
+Status: **preliminary** (2026-10-27); phase 1 results added 2026-10-30.
+Done means built and tested in phase 1 (`splectrum/dev-env-1-mycelium-git@33634de`).
 
 The capabilities needed, by URI. Any activity that can be scripted is a
 capability and goes on this list. Categories (first segment) are not yet
@@ -24,19 +25,19 @@ implementation sits in `capabilities/<uri>/`; reuse candidates are in
 
 | URI | Question it answers |
 |---|---|
-| `repo/seed` | Create a repository from the seed template |
+| `repo/seed` | Create a repository from the seed template (done: mycelium-repo) |
 | `repo/host` | Manage the repository on its host (GitHub): default branch, protection of `main` and the layer branches |
 | `repo/integrity` | Check the repository keeps its rules: disjoint layers, plain merges, history only grows |
-| `repo/sync` | Sync all layers to other remotes (e.g. Codeberg): plain pushes, report divergence |
-| `repo/publish` | Split a folder package into `publish/<package>` and push it to its product repository's `execute/main` |
+| `repo/sync` | Sync all layers to other remotes (e.g. Codeberg): plain pushes, report divergence (built: mycelium-repo, against stand-ins) |
+| `repo/publish` | Split a folder package into `publish/<package>` and push it to its product repository's `execute/main` (built: mycelium-repo, against stand-ins) |
 
 ## State
 
 | URI | Question it answers |
 |---|---|
-| `state/git` | Keep all node state in git; isomorphic-git or custom? |
-| `state/uri` | Our URIs: parse, validate, split at known prefixes (`mycelium-uri`) |
-| `state/xpath` | Navigate a tree by path, generic (`mycelium-xpath`) |
+| `state/git` | Keep all node state in git; isomorphic-git or custom? (done: mycelium-git) |
+| `state/uri` | Our URIs: parse, validate, split at known prefixes (done: mycelium-uri) |
+| `state/xpath` | Navigate a tree by path, generic (done: mycelium-xpath) |
 
 ## Layers
 
@@ -45,13 +46,13 @@ behaviour; everything above uses it, never git directly.
 
 | URI | Question it answers |
 |---|---|
-| `layer/create` | Create a layer branch, orphan, under a reserved first segment |
-| `layer/deploy` | Deploy a folder package into a layer, as a commit referencing its source |
-| `layer/extract` | Extract a layer into a folder package, recording its provenance |
+| `layer/create` | Create a layer branch, orphan, under a reserved first segment (done: mycelium-git) |
+| `layer/deploy` | Deploy a folder package into a layer, as a commit referencing its source (done: mycelium-layer) |
+| `layer/extract` | Extract a layer into a folder package, recording its provenance (done: mycelium-layer) |
 | `layer/compose` | Build a composed view: `main` with its layers, local, imported or virtual |
-| `layer/import` | Pull a layer in from another repository, with its history |
-| `layer/export` | Push a layer out to another repository |
-| `layer/request` | The request flow: `pending/default`, `execute/main`, merge into `main` with references |
+| `layer/import` | Pull a layer in from another repository, with its history (done: mycelium-layer) |
+| `layer/export` | Push a layer out to another repository (done: mycelium-layer, as bundles) |
+| `layer/request` | The request flow: `pending/default`, `execute/main`, merge into `main` with references (done: mycelium-layer, intake and execution) |
 
 ## Units
 
