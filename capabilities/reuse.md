@@ -24,8 +24,8 @@ Phase 1 (2026-10-30, `splectrum/dev-env-1-mycelium-git@33634de`): the mycelium `
 `bare-for-pear/isomorphic-git` are superseded by `mycelium-git`.
 `p2p-git`, one of the main components (the git engine on Hyperdrive),
 passes the backend contract, on
-bare-fs and Hyperdrive, Node and Bare. Still to fix in p2p-git itself
-(`mycelium-git`'s `hyperdriveFs` works around the first two):
-`hyperdrive-fs.js` reports folders as not-folders (`Stats(null)`), and
-lacks `readlink` and `symlink`; its pack parser decodes delta offsets
-wrongly (`notes/probes/`).
+bare-fs and Hyperdrive, Node and Bare. Fixed in p2p-git itself
+(`bare-for-pear/p2p-git@d7d154d`): `hyperdrive-fs.js` reports folders as
+folders and has `readlink` and `symlink`; its pack parser decodes
+ofs-delta offsets as git encodes them. `mycelium-git`'s `hyperdriveFs`
+workaround can go in the next phase.
