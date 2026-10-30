@@ -57,40 +57,26 @@ request and the discussion that settled it. Four products:
 - **Storing functionality:** how functionality is kept in the repository
   — branches, folders, repositories; a Mycelium discussion.
 
-**First development phase** (proposal): the self-contained repository's
-rules on git, with XPath access — one repository, using itself.
+**First development phase: done** (2026-10-30), in
+`splectrum/dev-env-1-mycelium-git`. Outcome: `splectrum/dev-env-1-mycelium-git@33634de:notes/status.md`.
+The mycelium modules (uri, xpath, git with native, isomorphic-git and
+p2p-git engines on Node and Bare; layer; repo), the test-run model, and
+the first settled rules. What was left out was overtaken by a changed
+landscape, not left unfinished; that landscape is being worked into this
+roadmap.
 
-- **All git implementations:** one backend contract (objects, refs,
-  commit, merge, fetch, push), an adapter per implementation (native git,
-  isomorphic-git on Node and on Bare), one test suite run against each.
-- **Capabilities:** `state/uri`, `state/xpath`, `state/git`; `layer/create`,
-  `layer/deploy`, `layer/extract`, `layer/request`, `layer/import`,
-  `layer/export` (`layer/compose` stays open); `repo/seed`,
-  `repo/integrity`, `repo/host`, `repo/sync`, `repo/publish`.
-- **The capability layer is self-contained:** its categorisation and
-  implementation details are local to it, not inherited by future
-  capability layers; its content is complete and internally consistent,
-  so reading it is enough to use it.
-- **Development is data, operation is deployed:** the capability code is
-  developed on `main`, deployed into `capability/default` to operate, and
-  into a parallel `capability/<name>` (e.g. `capability/test`) to test run
-  without touching the operational layer. Promotion deploys the tested
-  tree; the first deployment is a bootstrap by hand.
-- **Packages:** `mycelium-uri` (our URIs, generic) and `mycelium-xpath`
-  (tree navigation, generic) as helpers; `mycelium-git` on them — all the
-  repository rules (branches, layers, flows, safe operations, URI access
-  from the branch root) over a backend contract. Engines: native git as
-  reference (from `bare-for-pear/git`), `p2p-git` on bare-fs or Hyperdrive
-  as the embedded engine, to be finished (merge and index flow untested).
-- **One development repository per phase**, packages as folders on its
-  `main`. Each package is published by subtree split into
-  `publish/<package>` and a plain push to its product repository's
-  `execute/main`; the human syncs from local for now. Product repositories
-  are created by the human.
-- **Done:** the repository runs its own operations on its deployed
-  `capability/default`, after a test run on `capability/test`.
+**Second development phase** (next; the seed defines its requirements
+and done): **the creation of a P2P cluster**, starting with p2p-git on
+Hyperdrive. Its own development repository, with `mycelium-layer` and
+`mycelium-repo` as folders in it (no repositories of their own), on the
+base modules `mycelium-uri`, `mycelium-xpath`, `mycelium-git`. Publishing
+to product repositories stays ad hoc, done by hand. Directions to take
+into account are in `vision.md`.
 
-**Then: research the capabilities.** For each of the six, establish
+What follows depends on its outcome. The research below stays as input,
+not as a sequence.
+
+**Research the capabilities.** For each of the six, establish
 what exists, what we build, and the risks — by research and by probes.
 
 **Connectivity is tested as part of it.** The options, each a probe with a
@@ -133,8 +119,8 @@ automation assembled from them, as the check that none is missing.
 
 ## Later
 
-- Mycelium: the layers above the git repository.
-- Persistence behind git: filesystem, then Hyperdrive.
+- The mycelium base layer: Hypercore, mycelium-git, AVRO (typed data),
+  Kafka (streaming, high-volume data); `vision.md`.
 - Translation between natural language and a unit's internals.
 - The working practice moves onto node components.
 
