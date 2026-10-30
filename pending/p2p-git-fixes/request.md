@@ -14,3 +14,5 @@ native bundle with 30 ofs-deltas, every base on an object offset (29
 missed before). The patch's commit message carries the details.
 
 Once pushed, the workaround in mycelium-git can go (next phase).
+
+Done: pushed as `bare-for-pear/p2p-git@d7d154d`, 2026-10-30.
