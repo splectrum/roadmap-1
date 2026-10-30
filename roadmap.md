@@ -61,7 +61,12 @@ request and the discussion that settled it. Four products:
 `splectrum/dev-env-1-mycelium-git`. Outcome: `splectrum/dev-env-1-mycelium-git@33634de:notes/status.md`.
 The mycelium modules (uri, xpath, git with native, isomorphic-git and
 p2p-git engines on Node and Bare; layer; repo), the test-run model, and
-the first settled rules. What was left out was overtaken by a changed
+the first settled rules. The base modules are in their product
+repositories, single concern each: `pear-full-square/mycelium-uri@de8cdb7`,
+`pear-full-square/mycelium-xpath@81bd4f9`, `pear-full-square/mycelium-git@3a0dbe4`
+(their histories split from the phase repository). `pear-full-square` holds
+our application modules, `bare-for-pear` Bare versions of third-party or
+general-purpose modules (`p2p-git`). What was left out was overtaken by a changed
 landscape, not left unfinished; that landscape is being worked into this
 roadmap.
 
