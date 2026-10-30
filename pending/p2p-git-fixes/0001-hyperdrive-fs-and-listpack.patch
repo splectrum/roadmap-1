@@ -1,0 +1,96 @@
+From d7d154d043dbc293eacde2b6bb1feba1e8ca9588 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 30 Oct 2026 17:08:13 +0000
+Subject: [PATCH] fix: hyperdrive-fs folders and symlinks; listpack ofs-delta
+ offsets
+
+hyperdrive-fs.js: a Hyperdrive keeps no entries for folders, and stat and
+lstat returned Stats(null) for them, which reported not-a-folder. They
+now report a folder. readlink and symlink are added, which p2p-git needs.
+mycelium-git's contract suite passes on the plain adapter (18 of 18; 0
+before), so its hyperdriveFs workaround can go.
+
+git-list-pack.js: OFS_DELTA offsets were decoded little-endian. Git's
+encoding is big-endian with one added at each continuation byte. On a
+native bundle with 30 ofs-deltas, every base now lands on an object
+offset (29 missed before). Found in dev-env-1-mycelium-git's probes
+(splectrum/dev-env-1-mycelium-git@33634de:notes/probes/).
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01WxkeD1Ub6A1jqn46Mf9YzZ
+---
+ hyperdrive-fs.js           | 15 +++++++++++++--
+ src/utils/git-list-pack.js | 14 ++++++++------
+ 2 files changed, 21 insertions(+), 8 deletions(-)
+
+diff --git a/hyperdrive-fs.js b/hyperdrive-fs.js
+index da8afb5..f556c73 100644
+--- a/hyperdrive-fs.js
++++ b/hyperdrive-fs.js
+@@ -1,7 +1,7 @@
+ /**
+  * Hyperdrive fs adapter for isomorphic-git.
+  *
+- * Maps isomorphic-git's fs interface (8 methods) to Hyperdrive v11+ operations.
++ * Maps isomorphic-git's fs interface (10 methods) to Hyperdrive v11+ operations.
+  * Provides a `promises` property so isomorphic-git uses the promise API.
+  *
+  * Usage:
+@@ -17,7 +17,8 @@ class Stats {
+     this._entry = entry
+     this._isFile = entry && entry.value && entry.value.blob != null
+     this._isSymlink = entry && entry.value && entry.value.linkname != null
+-    this._isDir = entry != null && !this._isFile && !this._isSymlink
++    // No entry: an implicit folder (a Hyperdrive keeps no entries for them)
++    this._isDir = !this._isFile && !this._isSymlink
+   }
+ 
+   isFile () { return this._isFile }
+@@ -124,6 +125,16 @@ export function createFs (drive) {
+       return new Stats(entry)
+     },
+ 
++    async readlink (path) {
++      const entry = await drive.entry(path)
++      if (!entry || entry.value.linkname == null) throw enoent(path)
++      return entry.value.linkname
++    },
++
++    async symlink (target, path) {
++      await drive.symlink(path, target)
++    },
++
+     async readdir (path) {
+       const entries = []
+       for await (const entry of drive.readdir(path)) {
+diff --git a/src/utils/git-list-pack.js b/src/utils/git-list-pack.js
+index 4f29a3b..b79ecfc 100644
+--- a/src/utils/git-list-pack.js
++++ b/src/utils/git-list-pack.js
+@@ -82,15 +82,17 @@ async function parseHeader(reader) {
+   let ofs
+   let reference
+   if (type === 6) {
+-    let shift = 0
+-    ofs = 0
++    // Big-endian, with one added at each continuation (git's offset
++    // encoding): ofs is the distance back to the base object.
+     const bytes = []
+-    do {
++    byte = await reader.byte()
++    bytes.push(byte)
++    ofs = byte & 0b01111111
++    while (byte & 0b10000000) {
+       byte = await reader.byte()
+-      ofs |= (byte & 0b01111111) << shift
+-      shift += 7
+       bytes.push(byte)
+-    } while (byte & 0b10000000)
++      ofs = (ofs + 1) * 128 + (byte & 0b01111111)
++    }
+     reference = Buffer.from(bytes)
+   }
+   if (type === 7) {
+-- 
+2.43.0
+
