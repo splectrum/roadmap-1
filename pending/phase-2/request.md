@@ -19,7 +19,8 @@ copies follow from it.
    (`mycelium-git`'s `hyperdriveFs` works around both now), and the delta
    offsets its pack parser decodes wrongly. Hyperbee for refs is evaluated,
    not assumed.
-2. **Two nodes replicating.** Two Bare nodes in containers; discovery over
+2. **Two nodes replicating.** Docker is how container-based P2P clusters
+   are created. Two Bare nodes in containers; discovery over
    Hyperswarm; a repository replicated from one to the other. Probe the
    environment first: `env/docker` (the daemon, starting it, limits in a
    cloud session) and `env/udp` (needed for Hyperswarm). Run Bare in a
@@ -45,9 +46,11 @@ Capabilities, as in `capabilities.md`: `state/hyperdrive`; `env/docker`,
 
 ## Modules
 
-- `mycelium-uri`, `mycelium-xpath` and `mycelium-git` are the base.
-- `mycelium-layer` and `mycelium-repo` come in as folders on `main`, with
-  no repositories of their own.
+- All modules come in as folders on `main`: the base modules
+  `mycelium-uri`, `mycelium-xpath` and `mycelium-git` for the moment
+  (development goes on here, their product repositories are updated by
+  hand), `mycelium-layer` and `mycelium-repo` with no repositories of
+  their own.
 - The test-run machinery comes along; its practice stays: expectations in
   the requests, reports as requests, kept runs as data on `main`, machinery
   pinned by id and validated before the pin moves.
@@ -62,29 +65,17 @@ Capabilities, as in `capabilities.md`: `state/hyperdrive`; `env/docker`,
   numbers.
 - One thin path end to end before generalising: one node on Hyperdrive,
   then two replicating, then the seed node and a joining node.
-- A multistep process may run as a chain of single-concern repositories
-  (operators) where that proves natural; the test-run instance is the
-  pattern.
+- Operators (single-concern repositories) arise naturally where a
+  multistep process needs them; they are not a requirement.
+- Kept runs get small: we work towards a single code repository, the
+  package repository, with each run repository holding links to it and
+  still self-contained, since the cluster resolves the links.
 
 ## Not in this phase
 
 AVRO and Kafka (a p2p-Kafka probe only as a stretch), the full evaluation
 of the P2P boundary, devices and phones, private data. Directions:
 `vision.md`, carried in the seed for information.
-
-## Open
-
-- The base modules as folders in the new repository (development goes on
-  there, product repositories updated by hand), or as dependencies from
-  their product repositories. Proposal: folders, since mycelium-git will
-  change on Hyperdrive.
-- Operators: a requirement of the phase, or a way of working where natural
-  (proposal: the latter).
-- The cluster's platform: Docker in a cloud session first, a PC or VPS
-  later?
-- Kept runs: bundles on `main` grew to 280 MB in phase 1. Keep them on
-  Hyperdrive in this phase, or as bundles for now?
-- How branches beyond a session's own are pushed (open since phase 1).
 
 ## Background
 
