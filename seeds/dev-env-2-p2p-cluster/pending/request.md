@@ -1,9 +1,30 @@
-# Request (draft): second development phase
+# Request: second development phase
 
-From: `splectrum/roadmap-1`, 2026-10-30. A draft, rewritten from the first
-phase's (`splectrum/dev-env-1-mycelium-git@33634de:notes/next-phase-request.md`)
-after its evaluation. To be prepared as a seed in `seeds/`; the name is
-decided then. The seed's requirements define done.
+From: `splectrum/roadmap-1`, 2026-10-30. Rewritten from the first phase's
+draft (`splectrum/dev-env-1-mycelium-git@33634de:notes/next-phase-request.md`)
+after its evaluation.
+
+## First: plant this seed
+
+This seed was prepared in `splectrum/roadmap-1` under
+`seeds/dev-env-2-p2p-cluster/`. Plant it by hand; this is the bootstrap.
+
+1. Put `README.md`, `CLAUDE.md`, `rules.md` and `vision.md` on `main`.
+2. Create `pending/default` as an orphan branch holding this request in
+   `pending/` (as `pending/phase-2/request.md`).
+3. Create `execute/main` from `main`.
+
+Then set up the development state, through `execute/main`:
+
+- The five modules as folders on `main`, from
+  `splectrum/dev-env-1-mycelium-git@33634de`: `mycelium-uri`,
+  `mycelium-xpath`, `mycelium-git`, `mycelium-layer`, `mycelium-repo`,
+  and the test-run machinery (`test-run/`). Phase 1's kept runs stay
+  there, as its data; they are not carried over.
+- `mycelium-git`'s p2p-git dependency moved to the fixed commit
+  `bare-for-pear/p2p-git@d7d154d` (its `package-lock.json` still pins the
+  old one), and its `hyperdriveFs` workaround dropped: p2p-git's own
+  adapter passes the contract suite.
 
 ## The phase
 
@@ -43,6 +64,22 @@ Capabilities, as in `capabilities.md`: `state/hyperdrive`; `env/docker`,
 `env/udp`; `p2p/discover`, `p2p/replicate`; `pkg/store`, `pkg/import`,
 `pkg/materialise`; `cluster/bootstrap`, `cluster/seed`, `cluster/join`,
 `cluster/deployment`. First observations on `p2p/boundary`.
+
+## Done
+
+The phase is done when:
+
+1. mycelium-git's contract suite and the test-run model pass on a
+   persisted Hyperdrive under Bare, through p2p-git's own adapter, without
+   the workaround.
+2. Two Bare nodes in Docker containers find each other over Hyperswarm and
+   replicate a repository.
+3. A node starts from a plain Bare base through a bootstrap repository,
+   and takes what it needs from the package repository, loaded lazily.
+4. A deployment repository brings up a seed node and at least one joining
+   node, and records them.
+5. Every step is recorded and can be rerun, with metrics at the
+   boundary, and kept as small runs.
 
 ## Modules
 

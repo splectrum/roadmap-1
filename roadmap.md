@@ -70,8 +70,8 @@ general-purpose modules (`p2p-git`). What was left out was overtaken by a change
 landscape, not left unfinished; that landscape is being worked into this
 roadmap.
 
-**Second development phase** (next; the seed defines its requirements
-and done): **the creation of a P2P cluster**, starting with p2p-git on
+**Second development phase** (next; seed prepared in
+`seeds/dev-env-2-p2p-cluster/`, which holds its requirements and done): **the creation of a P2P cluster**, starting with p2p-git on
 Hyperdrive. Its own development repository, with `mycelium-layer` and
 `mycelium-repo` as folders in it (no repositories of their own), on the
 base modules `mycelium-uri`, `mycelium-xpath`, `mycelium-git`. Publishing
