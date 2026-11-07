@@ -93,6 +93,34 @@ roadmap.
   quiet; a node joining from another host by invitation) run again from
   the tenth release, checked on a local machine. Design, rules and guides:
   `docs/`.
+- **A settled design and a small set of simple rules**, the phase's main
+  result besides the code; with them, the work runs within simple rules,
+  with high autonomy:
+  - *The layered design* (`notes/node-pattern.md`, `notes/plan.md`):
+    Holepunch, the p2p series (mechanism only, no git, no management),
+    p2p-git, mycelium (knows no p2p), resources (`p2p-rns`), the node,
+    and managing only at the top, in the two managers. Every resource in
+    code first, behind the contract its repository form keeps later.
+  - *The platform's design* (`docs/design/`, each decision once, marked
+    built or agreed, with its reason): three levels (host, swarm, node),
+    each a folder with its own HAICC working on its own config; cold boot
+    (copy in) and warm boot (run and validate itself); self-contained
+    packages checked intact by hash; Bare only; the setup carrying its
+    runtime; the airgap's two sides.
+  - *Single concern, first* (root `rules.md`): every part one concern, one
+    concern in one place, validation only at the boundary, knowledge
+    staying with its concern. With it, the rules for records and topics
+    (a Kafka record as the elementary container, Kafka's names) and for
+    data names (lowerCamelCase, exact to and from URIs, `_` reserved).
+  - *Thirty consistency rules* (`docs/rules.md`), short and checkable,
+    many checked by a named test: names are URI parts, nothing hidden, the
+    folder is the context, every command says itself and logs every line
+    it prints, every state change said, exit codes 0/1/2, asked first
+    before touching the host or removing; packages self-contained, written
+    only by the package writer, never edited where used; tests carried by
+    their package, cleaning up after themselves, skipped and said rather
+    than passed; nothing merged or released untested; nothing
+    force-pushed; a decision lives once.
 - **Organisations:** engines in `pear-full-square`, Splectral components in
   `splectral`, packages and projects in `haiccing` (`vision.md`).
 - **Not reached:** a second physical host (simulated on one machine); the
