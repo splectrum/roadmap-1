@@ -1,6 +1,7 @@
 # Roadmap
 
-Status: **draft** — revised in spl8, 2026-10-26
+Status: **draft** — revised in spl8, 2026-10-26; phase 2's outcome recorded
+2026-11-07, the next stage in discussion
 
 Planned PRINCE2-style (`principles.md`): products first, the next stage in
 detail and later ones in outline, work managed by exception within
@@ -70,16 +71,57 @@ general-purpose modules (`p2p-git`). What was left out was overtaken by a change
 landscape, not left unfinished; that landscape is being worked into this
 roadmap.
 
-**Second development phase** (next; seed prepared in
-`seeds/dev-env-2-p2p-cluster/`, which holds its requirements and done): **the creation of a P2P cluster**, starting with p2p-git on
-Hyperdrive. Its own development repository, with `mycelium-layer` and
-`mycelium-repo` as folders in it (no repositories of their own), on the
-base modules `mycelium-uri`, `mycelium-xpath`, `mycelium-git`. Publishing
-to product repositories stays ad hoc, done by hand. Directions to take
-into account are in `vision.md`.
+**Second development phase: done** (2026-11-07), in
+`splectrum/dev-env-2-p2p-cluster`. Outcome:
+`splectrum/dev-env-2-p2p-cluster@c6b73bb:notes/status.md` and
+`steps/phase-3/readme.md`; its own roadmap as it went, `notes/plan.md`.
 
-What follows depends on its outcome. The research below stays as input,
-not as a sequence.
+- **The request was met** by 2026-11-02 (steps 0–10), on a design reworked
+  after a first thin build that stands as probes (`notes/node-pattern.md`):
+  the p2p series (`p2p-store`, `-dht`, `-connect`, `-replicate`,
+  `-channel`), `p2p-git` (moved to `pear-full-square`), mycelium on the p2p
+  layer (`p2p-mrepo`, test runs on Hypercore under Bare identical to
+  native), the node and its two managers, a resource name service in code
+  (`p2p-rns`) with liveness, data in topics (`mycelium-topic`), Splectral
+  (a browser platform showing a swarm live, recorded and replayed), and
+  the swarm's deployment as a repository on its master.
+- **Then HAICC**, under the phase repository's own "phase 3" (2026-11-05
+  to 11-07): one downloaded setup (39 MB, Bare only, no Node.js) boots a
+  work folder; swarms are made from self-contained packages published in
+  `haiccing`, nodes run in Docker containers, each level (host, swarm,
+  node) has its own HAICC and validates itself. Both demos (a node going
+  quiet; a node joining from another host by invitation) run again from
+  the tenth release, checked on a local machine. Design, rules and guides:
+  `docs/`.
+- **Organisations:** engines in `pear-full-square`, Splectral components in
+  `splectral`, packages and projects in `haiccing` (`vision.md`).
+- **Not reached:** a second physical host (simulated on one machine); the
+  public DHT (unreachable from a cloud session; swarms run a private one);
+  packages, the lookup and requests as repositories (in code first); node
+  keys kept securely; a phone.
+- **Practice learnt:** the local run is the real test (each release found
+  there what the sandbox did not); where the implementer settled structure
+  alone, the human corrected it, and rules for autonomy are being written;
+  planning moved into the phase repository as the phase grew. Agreed there
+  for the pipeline (`docs/design/pipeline.md`): the modules are the source
+  of truth (changes committed in them, no split from copies), cloud and
+  local meet through GitHub, candidates rebuilt and compared; tailored
+  development environments, one per piece of work, from a template,
+  discarded when done (in direction; details open).
+
+**Next stage: in discussion.** Proposed by the human at the end of the
+phase, nothing decided: **applications on mycelium repositories**. A
+repository's visible state composed of its own layers and read-only mounts
+of other repositories' data (links, not copies); a mounted source's
+change, synced, triggers an internal processing request, executed by the
+existing flow in the node's container, rerunnable, its result the
+repository's own state. Agreed in the phase for later: the p2p version
+(one code repository per swarm), pinning once the system works, Android (a
+Termux probe); the capability store, the lookup and the inbox as
+repositories; teardown with checkpointing; the documentation as a swarm
+app; the development environment as the whole pipeline.
+
+The research below stays as input, not as a sequence.
 
 **Research the capabilities.** For each of the six, establish
 what exists, what we build, and the risks — by research and by probes.
@@ -119,13 +161,19 @@ for git; whether Bare's TLS negotiates X25519MLKEM768 for the node UI.
 Also in this stage: a Bare node with its git store and local HTTP server
 running on a phone.
 
+Settled by phase 2 for connectivity: nodes on one network connect
+directly; a private DHT needs two persistent nodes; a cloud session cannot
+reach the public DHT, so the phone and the home node are tested from a
+local machine.
+
 **Then:** capabilities 1–6 built, each as one or more stages; home
 automation assembled from them, as the check that none is missing.
 
 ## Later
 
 - The mycelium base layer: Hypercore, mycelium-git, AVRO (typed data),
-  Kafka (streaming, high-volume data); `vision.md`.
+  Kafka (streaming, high-volume data; topics begun in phase 2,
+  `mycelium-topic`); `vision.md`.
 - Translation between natural language and a unit's internals.
 - The working practice moves onto node components.
 
