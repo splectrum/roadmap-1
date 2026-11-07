@@ -8,6 +8,15 @@ detail and later ones in outline, work managed by exception within
 tolerances. A stage is entered when the previous one has proved itself, not
 by date.
 
+## The aim: full AI autonomy
+
+Full AI autonomy, from identifying a need, or being made aware of one, up
+to having satisfied it with running software. KISS, consistent rules and
+self-containment are what make it possible: an AI acts autonomously within
+simple, consistent rules, on units that carry what they need. Every stage
+is judged by how far it brings this, and a phase's requirements may be
+amended to deliver on it better.
+
 ## The product: capabilities for applications
 
 The near-term product is a set of capabilities on which applications can be
@@ -76,6 +85,10 @@ roadmap.
 `splectrum/dev-env-2-p2p-cluster@c6b73bb:notes/status.md` and
 `steps/phase-3/readme.md`; its own roadmap as it went, `notes/plan.md`.
 
+- **Read against the aim.** Where the phase amended its requirements
+  (the design reworked after the first build, packages and the boot, Bare
+  only, the platform rebuilt on one structure), it was to deliver better
+  on KISS, consistent rules and self-containment, and so on autonomy.
 - **The request was met** by 2026-11-02 (steps 0–10), on a design reworked
   after a first thin build that stands as probes (`notes/node-pattern.md`):
   the p2p series (`p2p-store`, `-dht`, `-connect`, `-replicate`,
