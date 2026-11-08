@@ -151,40 +151,16 @@ roadmap.
   development environments, one per piece of work, from a template,
   discarded when done (in direction; details open).
 
-**Third development phase: applications on mycelium repositories**
-(**under discussion, nothing settled**; a draft request with the
-implementer's proposals in `pending/phase-3/request.md`, a starting point
-for the discussion, not its outcome). The direction was proposed by the
-human at the end of phase 2. Numbering: the roadmap's phase 2 covers the phase repository's
-own "phase 2" and "phase 3"; this is the roadmap's phase 3.
-
-The aim moves inside the system: a repository notices a change it depends
-on and satisfies what follows from it by itself. A repository's visible
-state is composed of its own layers and read-only mounts of other
-repositories' data (links, not copies); a mounted source's change, synced,
-triggers an internal request in the repository's own `pending/default`,
-executed by the existing flow in the node's container, rerunnable, its
-result the repository's own state. On the HAICC platform as built, under
-phase 2's rules.
-
-Proposed for discussion:
-
-- one mount, one trigger, one request executed, then a chain of
-  repositories: the first application, a `haiccing` package with its own
-  tests, shown in Splectral, passing from a published release on a local
-  machine;
-- the first tailored development environment: from a template, the
-  modules brought in at commits, every change committed in the modules
-  themselves;
-- autonomy measured: every point where the human was needed recorded with
-  its reason, so the phase's report says what still stands between a need
-  and running software.
-
-Agreed in phase 2 for later, outside this phase unless it needs them: the
-p2p version (one code repository per swarm), pinning; an Android Termux
-probe alongside. Further down: the capability store, the lookup and the
-inbox as repositories; teardown with checkpointing; the development
-environment as the whole pipeline.
+**Third development phase: mycelium repositories on a swarm**
+(in discussion; `pending/phase-3/request.md` holds what has settled). So
+far: it starts with a review of phase 2's output, refactored where
+needed; then mycelium repositories on a swarm with initial features and
+functionality: data structures composed by fine-grained, read-only
+references into data hives (a hive is a data structure); functionality
+mounted on the self-contained repository, a crucial requirement; a
+mycelium repository on the swarm for the logs; maybe the logs in a
+Splectral server, reached through a browser. Triggers, internal requests
+and applications on top come later.
 
 Planning stays here; a phase repository keeps its steps and records and
 links back.
