@@ -1,7 +1,8 @@
 # Roadmap
 
 Status: **draft** — revised in spl8, 2026-10-26; phase 2's outcome recorded
-2026-11-07; phase 3 expected, 2026-11-08
+2026-11-07; phase 3 under discussion,
+2026-11-08
 
 Planned PRINCE2-style (`principles.md`): products first, the next stage in
 detail and later ones in outline, work managed by exception within
@@ -151,9 +152,10 @@ roadmap.
   discarded when done (in direction; details open).
 
 **Third development phase: applications on mycelium repositories**
-(expected; draft request in `pending/phase-3/request.md`, its open
-questions to settle before the seed). Proposed by the human at the end of
-phase 2. Numbering: the roadmap's phase 2 covers the phase repository's
+(**under discussion, nothing settled**; a draft request with the
+implementer's proposals in `pending/phase-3/request.md`, a starting point
+for the discussion, not its outcome). The direction was proposed by the
+human at the end of phase 2. Numbering: the roadmap's phase 2 covers the phase repository's
 own "phase 2" and "phase 3"; this is the roadmap's phase 3.
 
 The aim moves inside the system: a repository notices a change it depends
@@ -165,7 +167,7 @@ executed by the existing flow in the node's container, rerunnable, its
 result the repository's own state. On the HAICC platform as built, under
 phase 2's rules.
 
-Expected of it:
+Proposed for discussion:
 
 - one mount, one trigger, one request executed, then a chain of
   repositories: the first application, a `haiccing` package with its own

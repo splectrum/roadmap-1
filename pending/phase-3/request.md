@@ -1,8 +1,9 @@
 # Request: third development phase (draft)
 
-From: `splectrum/roadmap-1`, 2026-11-08. Draft, after phase 2's
-evaluation; the open questions below are settled before the seed is
-prepared. The proposal is the human's, made at the end of phase 2
+From: `splectrum/roadmap-1`, 2026-11-08. **Draft for discussion**: the
+implementer's proposals, nothing in it settled. The phase's scope, its
+done and the open questions are discussed with the human; what settles
+replaces this draft before the seed is prepared. The proposal is the human's, made at the end of phase 2
 (`splectrum/dev-env-2-p2p-cluster@c6b73bb:notes/plan.md`, "Proposed next
 phase").
 
