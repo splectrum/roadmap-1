@@ -1,7 +1,9 @@
 # Capabilities
 
-Status: **preliminary** (2026-10-27); phase 1 results added 2026-10-30.
-Done means built and tested in phase 1 (`splectrum/dev-env-1-mycelium-git@33634de`).
+Status: **preliminary** (2026-10-27); phase 1 results added 2026-10-30,
+phase 2's 2026-11-07. Done means built and tested in a phase: phase 1
+(`splectrum/dev-env-1-mycelium-git@33634de`), phase 2
+(`splectrum/dev-env-2-p2p-cluster@c6b73bb`, its steps in `steps/`).
 
 The capabilities needed, by URI. Any activity that can be scripted is a
 capability and goes on this list. Categories (first segment) are not yet
@@ -12,40 +14,43 @@ implementation sits in `capabilities/<uri>/`; reuse candidates are in
 ## Overview
 
 Grouped by layer, from the base up; green done, amber built but not yet in
-real use, blue the next phase, grey later.
+real use (or in code first, its repository form to come), blue the
+proposed next phase, grey later.
 
 ```mermaid
 flowchart BT
   subgraph base[Mycelium base layer]
     direction LR
-    hc[Hypercore<br/>state/hyperdrive]:::next
+    hc[Hypercore<br/>state/hyperdrive]:::done
     git[mycelium-git<br/>state/git · state/bundle]:::done
     avro[AVRO<br/>state/avro]:::later
-    kafka[Kafka<br/>state/kafka]:::later
+    kafka[Kafka<br/>state/topic · state/kafka]:::built
     voc[uri · xpath<br/>state/uri · state/xpath]:::done
   end
   subgraph para[Repository paradigms]
     direction LR
     layer[layer/create · deploy · extract<br/>import · export · request]:::done
-    compose[layer/compose]:::later
+    compose[layer/compose · repo/trigger]:::next
     repo1[repo/seed]:::done
     repo2[repo/keep · inflate · ask<br/>publish · sync]:::built
     repo3[repo/promote · integrity · host]:::later
   end
   subgraph cluster[P2P cluster]
     direction LR
-    env[env/sense · docker · udp<br/>node/deploy · run · teardown]:::next
-    pkg[pkg/store · import · materialise]:::next
-    cl[cluster/bootstrap · seed<br/>join · deployment]:::next
-    op[op/chain]:::next
-    p2p[p2p/discover · connect<br/>replicate · boundary]:::next
+    env[env/sense · docker · udp]:::done
+    p2p[p2p/discover · connect<br/>replicate · channel]:::done
+    cl[cluster/bootstrap · seed<br/>join · deployment · liveness]:::done
+    names[p2p/names]:::built
+    pkg[pkg/store · import · materialise]:::built
+    haicc[haicc/boot · package<br/>release · teardown]:::done
+    op[op/chain · p2p/boundary]:::later
   end
   subgraph apps[Towards applications]
     direction LR
     dev[node/mobile · phone/loop]:::later
     data[data/*: instance · encrypt · pair<br/>keystore · blind · pq · session]:::later
     unit[unit/run · unit/iot]:::later
-    ui[ui/serve]:::later
+    ui[ui/serve · ui/splectral]:::built
   end
   base --> para --> cluster --> apps
   classDef done fill:#2e7d32,color:#fff,stroke:#1b5e20
@@ -58,12 +63,12 @@ flowchart BT
 
 | URI | Question it answers |
 |---|---|
-| `env/sense` | What does a node run on: runtime, host, container, cloud session, Docker? (probe ran 2026-10-27) |
-| `env/udp` | Is outbound UDP available here? |
-| `env/docker` | Is Docker usable, and how is its daemon started where needed? |
-| `node/deploy` | Bring up one or more nodes, adapted to where it runs (now `cluster/*`, by operators) |
-| `node/run` | Run nodes and collect their execution data (now `cluster/*`) |
-| `node/teardown` | Remove what was deployed, leaving nothing behind |
+| `env/sense` | What does a node run on: runtime, host, container, cloud session, Docker? (probe ran 2026-10-27; HAICC's warm boot checks the host's prerequisites) |
+| `env/udp` | Is outbound UDP available here? (done: not to the public DHT from a cloud session; inside the host and between containers, yes) |
+| `env/docker` | Is Docker usable, and how is its daemon started where needed? (done: started by hand in a cloud session; Docker 28 wants a network's subnet) |
+| `node/deploy` | Bring up one or more nodes, adapted to where it runs (now `haicc/boot`) |
+| `node/run` | Run nodes and collect their execution data (now `haicc/boot`, the node managers) |
+| `node/teardown` | Remove what was deployed, leaving nothing behind (now `haicc/teardown`) |
 | `phone/loop` | Get a real phone into the test loop and read its execution data |
 
 ## Repository
@@ -79,6 +84,7 @@ flowchart BT
 | `repo/inflate` | Bring a kept repository back to ask it again (built: test-run) |
 | `repo/ask` | Put a request into a repository, run it, read the response (built: test-run) |
 | `repo/promote` | Deploy a tested capability tree into `capability/default`, with its evidence |
+| `repo/trigger` | A change in visible state, synced, writes an internal processing request into the repository's own `pending/default` (proposed next) |
 
 ## State
 
@@ -88,8 +94,9 @@ flowchart BT
 | `state/uri` | Our URIs: parse, validate, split at known prefixes (done: mycelium-uri) |
 | `state/xpath` | Navigate a tree by path, generic (done: mycelium-xpath) |
 | `state/bundle` | Write and read git bundles on every engine (done: mycelium-git) |
-| `state/hyperdrive` | Git on Hyperdrive: p2p-git, Corestore, a replicated store |
+| `state/hyperdrive` | Git on Hyperdrive: p2p-git, Corestore, a replicated store (done: `p2p-store`, `p2p-git`, `p2p-mrepo`; test runs on Hypercore under Bare identical to native) |
 | `state/avro` | Objects as typed data: schemas and typed values, a URI naming a value |
+| `state/topic` | Data in topics: a Kafka record as the elementary container, single-partition, state built from topics (built: `mycelium-topic`, JSON first) |
 | `state/kafka` | Streams and high-volume data: topics and partitions on Hypercore |
 
 ## Layers
@@ -102,25 +109,38 @@ behaviour; everything above uses it, never git directly.
 | `layer/create` | Create a layer branch, orphan, under a reserved first segment (done: mycelium-git) |
 | `layer/deploy` | Deploy a folder package into a layer, as a commit referencing its source (done: mycelium-layer) |
 | `layer/extract` | Extract a layer into a folder package, recording its provenance (done: mycelium-layer) |
-| `layer/compose` | Build a composed view: `main` with its layers, local, imported or virtual |
+| `layer/compose` | Build a composed view: `main` with its layers, local, imported or virtual; read-only mounts of other repositories' data (proposed next) |
 | `layer/import` | Pull a layer in from another repository, with its history (done: mycelium-layer) |
 | `layer/export` | Push a layer out to another repository (done: mycelium-layer, as bundles) |
 | `layer/request` | The request flow: `pending/default`, `execute/main`, merge into `main` with references (done: mycelium-layer, intake and execution) |
 
 ## Cluster
 
-The next phase: the creation of a P2P cluster (`vision.md`).
+Phase 2: the creation of a P2P cluster, a swarm (`vision.md`).
 
 | URI | Question it answers |
 |---|---|
-| `pkg/store` | Keep packages once, in a package repository, each instance a commit |
-| `pkg/import` | Bring a third-party package in once, at the boundary |
-| `pkg/materialise` | Resolve a deployment's links into the folders Node and Bare expect |
-| `cluster/bootstrap` | A bootstrap repository that sets up a node from a plain base with Bare only |
-| `cluster/seed` | Bring up the seed node, the first always-on peer |
-| `cluster/join` | Bring further nodes into the cluster |
-| `cluster/deployment` | A deployment repository: what the cluster is, its nodes, state and monitoring |
+| `pkg/store` | Keep packages once, in a package repository, each instance a commit (built in code first: the master serves the swarm's packages; the capability store as a repository later) |
+| `pkg/import` | Bring a third-party package in once, at the boundary (built: the package manager's import) |
+| `pkg/materialise` | Resolve a deployment's links into the folders Node and Bare expect (built: the swarm's codebase assembled into the master's `packages/`) |
+| `cluster/bootstrap` | A bootstrap repository that sets up a node from a plain base with Bare only (done: provisioned through an auxiliary swarm, secrets in memory) |
+| `cluster/seed` | Bring up the seed node, the first always-on peer (done: genesis, the master) |
+| `cluster/join` | Bring further nodes into the cluster (done; from another host by invitation, simulated) |
+| `cluster/deployment` | A deployment repository: what the cluster is, its nodes, state and monitoring (done: the swarm's part on the master, replicated) |
+| `cluster/liveness` | Know when a node has gone: leases, absent and present again (done: `p2p-rns`) |
 | `op/chain` | Run a multistep process as a chain of single-concern operator repositories |
+
+## Platform (HAICC)
+
+Phase 2, its "phase 3": setting up and running swarms on a host, from one
+setup file (`splectrum/dev-env-2-p2p-cluster@c6b73bb:docs/`).
+
+| URI | Question it answers |
+|---|---|
+| `haicc/boot` | Boot a level (host, swarm, node) from its folder's config: cold boot copies in, warm boot runs and validates itself (done) |
+| `haicc/package` | A self-contained package with its own tests, published in `haiccing`, deployed through the root (done) |
+| `haicc/release` | The setup file (Bare only), published and checked from a local machine (done: ten releases) |
+| `haicc/teardown` | Remove what a level made, nothing left behind (done, plain; with checkpointing later) |
 
 ## Units
 
@@ -133,22 +153,25 @@ The next phase: the creation of a P2P cluster (`vision.md`).
 
 | URI | Question it answers |
 |---|---|
-| `ui/serve` | Serve a browser UI locally from every node, with no dependency on another |
+| `ui/serve` | Serve a browser UI locally from every node, with no dependency on another (a Splectral server on the host so far) |
+| `ui/splectral` | Show a swarm's activity live, record and replay scenarios (built: the Splectral platform on Bare) |
 
 ## Nodes on devices
 
 | URI | Question it answers |
 |---|---|
-| `node/mobile` | Run a full peer on a phone: Bare in an app, or Termux? |
+| `node/mobile` | Run a full peer on a phone: Bare in an app, or Termux? (a Termux probe agreed for later) |
 
 ## P2P
 
 | URI | Question it answers |
 |---|---|
-| `p2p/discover` | Find the owner's other nodes |
-| `p2p/connect` | Connect nodes, with a phone on mobile data as the hard case: holepunching, home node, VPS, Cloudflare at the edges |
-| `p2p/replicate` | Replicate state between nodes |
-| `p2p/boundary` | Where git's fetch and push give way to subscription and replication |
+| `p2p/discover` | Find the owner's other nodes (done on a private DHT: `p2p-dht`) |
+| `p2p/connect` | Connect nodes, with a phone on mobile data as the hard case: holepunching, home node, VPS, Cloudflare at the edges (done on one network: `p2p-connect`; the hard case open) |
+| `p2p/replicate` | Replicate state between nodes (done, lazily, with accounting: `p2p-replicate`) |
+| `p2p/channel` | Messages on a connection, not stored: secret handover, requests and lookups (done: `p2p-channel`) |
+| `p2p/names` | Resolve a resource by URI to its id and key across a swarm (built in code: `p2p-rns`; as a repository later) |
+| `p2p/boundary` | Where git's fetch and push give way to subscription and replication (first observations) |
 
 ## Private data
 
@@ -165,5 +188,7 @@ The next phase: the creation of a P2P cluster (`vision.md`).
 ## Sequence
 
 Done: state and layers, the repository capabilities on stand-ins (phase
-1). Next: the cluster, starting with p2p-git on Hyperdrive. What follows
-depends on its outcome; the rest of the list is input, not an order.
+1); the cluster, its p2p layer and the HAICC platform, on one host (phase
+2). Proposed next, in discussion: applications on mycelium repositories
+(`layer/compose` with mounts, `repo/trigger`). The rest of the list is
+input, not an order.

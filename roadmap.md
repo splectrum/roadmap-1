@@ -1,11 +1,22 @@
 # Roadmap
 
-Status: **draft** — revised in spl8, 2026-10-26
+Status: **draft** — revised in spl8, 2026-10-26; phase 2's outcome recorded
+2026-11-07; phase 3's seed prepared,
+2026-11-08
 
 Planned PRINCE2-style (`principles.md`): products first, the next stage in
 detail and later ones in outline, work managed by exception within
 tolerances. A stage is entered when the previous one has proved itself, not
 by date.
+
+## The aim: full AI autonomy
+
+Full AI autonomy, from identifying a need, or being made aware of one, up
+to having satisfied it with running software. KISS, consistent rules and
+self-containment are what make it possible: an AI acts autonomously within
+simple, consistent rules, on units that carry what they need. Every stage
+is judged by how far it brings this, and a phase's requirements may be
+amended to deliver on it better.
 
 ## The product: capabilities for applications
 
@@ -70,16 +81,96 @@ general-purpose modules (`p2p-git`). What was left out was overtaken by a change
 landscape, not left unfinished; that landscape is being worked into this
 roadmap.
 
-**Second development phase** (next; seed prepared in
-`seeds/dev-env-2-p2p-cluster/`, which holds its requirements and done): **the creation of a P2P cluster**, starting with p2p-git on
-Hyperdrive. Its own development repository, with `mycelium-layer` and
-`mycelium-repo` as folders in it (no repositories of their own), on the
-base modules `mycelium-uri`, `mycelium-xpath`, `mycelium-git`. Publishing
-to product repositories stays ad hoc, done by hand. Directions to take
-into account are in `vision.md`.
+**Second development phase: done** (2026-11-07), in
+`splectrum/dev-env-2-p2p-cluster`. Outcome:
+`splectrum/dev-env-2-p2p-cluster@c6b73bb:notes/status.md` and
+`steps/phase-3/readme.md`; its own roadmap as it went, `notes/plan.md`.
 
-What follows depends on its outcome. The research below stays as input,
-not as a sequence.
+- **Read against the aim.** Where the phase amended its requirements
+  (the design reworked after the first build, packages and the boot, Bare
+  only, the platform rebuilt on one structure), it was to deliver better
+  on KISS, consistent rules and self-containment, and so on autonomy.
+- **The request was met** by 2026-11-02 (steps 0–10), on a design reworked
+  after a first thin build that stands as probes (`notes/node-pattern.md`):
+  the p2p series (`p2p-store`, `-dht`, `-connect`, `-replicate`,
+  `-channel`), `p2p-git` (moved to `pear-full-square`), mycelium on the p2p
+  layer (`p2p-mrepo`, test runs on Hypercore under Bare identical to
+  native), the node and its two managers, a resource name service in code
+  (`p2p-rns`) with liveness, data in topics (`mycelium-topic`), Splectral
+  (a browser platform showing a swarm live, recorded and replayed), and
+  the swarm's deployment as a repository on its master.
+- **Then HAICC**, under the phase repository's own "phase 3" (2026-11-05
+  to 11-07): one downloaded setup (39 MB, Bare only, no Node.js) boots a
+  work folder; swarms are made from self-contained packages published in
+  `haiccing`, nodes run in Docker containers, each level (host, swarm,
+  node) has its own HAICC and validates itself. Both demos (a node going
+  quiet; a node joining from another host by invitation) run again from
+  the tenth release, checked on a local machine. Design, rules and guides:
+  `docs/`.
+- **A settled design and a small set of simple rules**, the phase's main
+  result besides the code; with them, the work runs within simple rules,
+  with high autonomy:
+  - *The layered design* (`notes/node-pattern.md`, `notes/plan.md`):
+    Holepunch, the p2p series (mechanism only, no git, no management),
+    p2p-git, mycelium (knows no p2p), resources (`p2p-rns`), the node,
+    and managing only at the top, in the two managers. Every resource in
+    code first, behind the contract its repository form keeps later.
+  - *The platform's design* (`docs/design/`, each decision once, marked
+    built or agreed, with its reason): three levels (host, swarm, node),
+    each a folder with its own HAICC working on its own config; cold boot
+    (copy in) and warm boot (run and validate itself); self-contained
+    packages checked intact by hash; Bare only; the setup carrying its
+    runtime; the airgap's two sides.
+  - *Single concern, first* (root `rules.md`): every part one concern, one
+    concern in one place, validation only at the boundary, knowledge
+    staying with its concern. With it, the rules for records and topics
+    (a Kafka record as the elementary container, Kafka's names) and for
+    data names (lowerCamelCase, exact to and from URIs, `_` reserved).
+  - *Thirty consistency rules* (`docs/rules.md`), short and checkable,
+    many checked by a named test: names are URI parts, nothing hidden, the
+    folder is the context, every command says itself and logs every line
+    it prints, every state change said, exit codes 0/1/2, asked first
+    before touching the host or removing; packages self-contained, written
+    only by the package writer, never edited where used; tests carried by
+    their package, cleaning up after themselves, skipped and said rather
+    than passed; nothing merged or released untested; nothing
+    force-pushed; a decision lives once.
+- **Organisations:** engines in `pear-full-square`, Splectral components in
+  `splectral`, packages and projects in `haiccing` (`vision.md`).
+- **Not reached:** a second physical host (simulated on one machine); the
+  public DHT (unreachable from a cloud session; swarms run a private one);
+  packages, the lookup and requests as repositories (in code first); node
+  keys kept securely; a phone.
+- **Practice learnt:** the local run is the real test (each release found
+  there what the sandbox did not); where the implementer settled structure
+  alone, the human corrected it, and rules for autonomy are being written;
+  planning moved into the phase repository as the phase grew. Agreed there
+  for the pipeline (`docs/design/pipeline.md`): the modules are the source
+  of truth (changes committed in them, no split from copies), cloud and
+  local meet through GitHub, candidates rebuilt and compared; tailored
+  development environments, one per piece of work, from a template,
+  discarded when done (in direction; details open).
+
+**Third development phase: mycelium repositories on a swarm** (next;
+seed prepared in `seeds/dev-env-3-mycelium/`, which holds its request and
+done), settled in discussion with the human. It starts with a review of
+the code phase 2 produced, refactored where needed, and the
+documentation cleaned up with it, never more complete than the
+implementation. Then mycelium repositories on a swarm with initial
+features and functionality: data structures composed by fine-grained,
+read-only references into data hives (a hive is a data structure);
+functionality mounted on the self-contained repository, a crucial
+requirement; a mycelium repository on the swarm for the logs; maybe the
+logs in a Splectral server, reached through a browser. Done: a proof in
+principle of an operational mycelium repository on the HAICC platform.
+The code is handled as in phase 2; the seed carries phase 2's rules and
+documentation. Triggers, internal requests and applications on top come
+later.
+
+Planning in both places: here for the seed, in the phase repository while
+the work is done, its outcome reported back. We are still learning a lot.
+
+The research below stays as input, not as a sequence.
 
 **Research the capabilities.** For each of the six, establish
 what exists, what we build, and the risks — by research and by probes.
@@ -119,13 +210,19 @@ for git; whether Bare's TLS negotiates X25519MLKEM768 for the node UI.
 Also in this stage: a Bare node with its git store and local HTTP server
 running on a phone.
 
+Settled by phase 2 for connectivity: nodes on one network connect
+directly; a private DHT needs two persistent nodes; a cloud session cannot
+reach the public DHT, so the phone and the home node are tested from a
+local machine.
+
 **Then:** capabilities 1–6 built, each as one or more stages; home
 automation assembled from them, as the check that none is missing.
 
 ## Later
 
 - The mycelium base layer: Hypercore, mycelium-git, AVRO (typed data),
-  Kafka (streaming, high-volume data); `vision.md`.
+  Kafka (streaming, high-volume data; topics begun in phase 2,
+  `mycelium-topic`); `vision.md`.
 - Translation between natural language and a unit's internals.
 - The working practice moves onto node components.
 
