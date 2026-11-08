@@ -12,6 +12,10 @@ Numbering: the roadmap's phase 2 covers the phase repository's own
 - **It starts with a review of the code phase 2 produced, and a refactor
   where needed.** The aim (`roadmap.md`): full AI autonomy, served by KISS,
   consistent rules and self-containment.
+- **The documentation, with the review:** the stale notes cleaned up;
+  what documentation there is split into clear sections, where it is not
+  already; never more complete than the implementation: it documents what
+  was built, nothing more.
 - **The main achievement: mycelium repositories on a swarm**, with initial
   features and functionality.
 - **Data structure composition**, by referencing into read-only *data
