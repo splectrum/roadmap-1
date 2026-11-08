@@ -1,7 +1,7 @@
 # Roadmap
 
 Status: **draft** — revised in spl8, 2026-10-26; phase 2's outcome recorded
-2026-11-07; phase 3 under discussion,
+2026-11-07; phase 3's seed prepared,
 2026-11-08
 
 Planned PRINCE2-style (`principles.md`): products first, the next stage in
@@ -151,19 +151,24 @@ roadmap.
   development environments, one per piece of work, from a template,
   discarded when done (in direction; details open).
 
-**Third development phase: mycelium repositories on a swarm**
-(in discussion; `pending/phase-3/request.md` holds what has settled). So
-far: it starts with a review of phase 2's output, refactored where
-needed; then mycelium repositories on a swarm with initial features and
-functionality: data structures composed by fine-grained, read-only
-references into data hives (a hive is a data structure); functionality
-mounted on the self-contained repository, a crucial requirement; a
-mycelium repository on the swarm for the logs; maybe the logs in a
-Splectral server, reached through a browser. Triggers, internal requests
-and applications on top come later.
+**Third development phase: mycelium repositories on a swarm** (next;
+seed prepared in `seeds/dev-env-3-mycelium/`, which holds its request and
+done), settled in discussion with the human. It starts with a review of
+the code phase 2 produced, refactored where needed, and the
+documentation cleaned up with it, never more complete than the
+implementation. Then mycelium repositories on a swarm with initial
+features and functionality: data structures composed by fine-grained,
+read-only references into data hives (a hive is a data structure);
+functionality mounted on the self-contained repository, a crucial
+requirement; a mycelium repository on the swarm for the logs; maybe the
+logs in a Splectral server, reached through a browser. Done: a proof in
+principle of an operational mycelium repository on the HAICC platform.
+The code is handled as in phase 2; the seed carries phase 2's rules and
+documentation. Triggers, internal requests and applications on top come
+later.
 
-Planning stays here; a phase repository keeps its steps and records and
-links back.
+Planning in both places: here for the seed, in the phase repository while
+the work is done, its outcome reported back. We are still learning a lot.
 
 The research below stays as input, not as a sequence.
 
