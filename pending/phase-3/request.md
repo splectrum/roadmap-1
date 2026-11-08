@@ -9,8 +9,8 @@ Numbering: the roadmap's phase 2 covers the phase repository's own
 
 ## Settled so far
 
-- **It starts with a review of phase 2's output, and a refactor where
-  needed.** The aim (`roadmap.md`): full AI autonomy, served by KISS,
+- **It starts with a review of the code phase 2 produced, and a refactor
+  where needed.** The aim (`roadmap.md`): full AI autonomy, served by KISS,
   consistent rules and self-containment.
 - **The main achievement: mycelium repositories on a swarm**, with initial
   features and functionality.
@@ -27,7 +27,7 @@ requests, applications on top (later).
 
 ## Open
 
-- The review: what it covers, by what measure, and what it delivers.
+- The review: by what measure, and what it delivers.
 - Hives: what makes a data structure a hive; what a reference names and
   how fine it goes; read-only how (by key, by commit).
 - Mounting functionality: what is mounted (code from the package
